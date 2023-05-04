@@ -1,7 +1,7 @@
 # City Explorer API
 
 **Author**: Kaydee Kelly
-**Version**: 0.0.0 
+**Version**: 0.0.1 
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
@@ -26,11 +26,11 @@
 Time Estimates
 For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
 
-Name of feature: ________________________________
+Name of feature: Weather Info | City Explorer
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 12
 
-Start time: _____
+Start time: 10 AM Thrusday
 
 Finish time: _____
 
