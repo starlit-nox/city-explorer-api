@@ -1,7 +1,7 @@
 # City Explorer API
 
 **Author**: Kaydee Kelly
-**Version**: 0.0.0 
+**Version**: 0.0.1 
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
@@ -21,17 +21,41 @@
 
 05-04-2023 10:40am Created weather.json and filled it with data
 
+05-04-2023 10:50am Installed express server
+
+05-04-2023 11am Created local host express server
+
+05-06-2023 12pm Server not launching
+
+05-09-2023 11am ReferenceError requires is not defined
+
+05-09-2023 11:30am Object anonoymous error
+
+05-10-2023 10:00am Server now listens & 404 Not Found Error in terminal
+
+5-10-2023 Custom 404 Error added.
+
+5-10-2023
+
+5-10-2023
+
+5-10-2023
+
+5-10-2023
+
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
-Time Estimates
+Resource Credit: <https://www.javascripttutorial.net/nodejs-tutorial/simple-express-server/>
+
+**Time Estimates**
 For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
 
-Name of feature: ________________________________
+**Name of feature:** Weather Info | City Explorer
 
-Estimate of time needed to complete: _____
+**Estimate of time needed to complete:** 12 Hours
 
-Start time: _____
+**Start time:** 10 AM Thrusday
 
-Finish time: _____
+**Finish time:** _____
 
-Actual time needed to complete: _____
+**Actual time needed to complete:** _____
