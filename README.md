@@ -25,6 +25,24 @@
 
 05-04-2023 11am Created local host express server
 
+05-06-2023 12pm Server not launching
+
+05-09-2023 11am ReferenceError requires is not defined
+
+05-09-2023 11:30am Object anonoymous error
+
+05-10-2023 10:00am Server now listens & 404 Not Found Error in terminal
+
+5-10-2023 Custom 404 Error added.
+
+5-10-2023
+
+5-10-2023
+
+5-10-2023
+
+5-10-2023
+
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 Resource Credit: <https://www.javascripttutorial.net/nodejs-tutorial/simple-express-server/>
