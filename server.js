@@ -17,16 +17,19 @@ app.use(cors()); // allows cross-origin resource sharing
 
 // this receives all requests and tells it what to do
 app.get('/weather', (request, response) => {
-    const { lat, lon, searchQuery } = request.query;
+    const { lat, lon, city_name } = request.query;
+console.log(lat)
+console.log(lon)
+console.log(city_name)
 
     // check if required parameters are missing
-    if (!lat || !lon || !searchQuery) {
+    if (!lat || !lon || !city_name) {
         response.status(400).send('Required query parameters are missing');
         return;
     }
 
     // find the city that matches the query parameters
-    const city = findCity(lat, lon, searchQuery);
+    const city = findCity(lat, lon, city_name);
 
     // if city is not found, return an error
     if (!city) {
@@ -35,7 +38,7 @@ app.get('/weather', (request, response) => {
     }
 
     // find the weather for the city
-    const weather = findWeather(city.searchQuery);
+    const weather = findWeather(city.city_name);
 
     // if weather is not found, return an error
     if (weather) {
@@ -48,7 +51,7 @@ app.get('/weather', (request, response) => {
 
     // send the weather data as response
     response.send({
-        city: city.searchQuery,
+        city: city.city_name,
         description: weather.weather.description,
         temperature: weather.temp,
         forecasts: forecasts // add the forecasts array to the response
@@ -56,28 +59,29 @@ app.get('/weather', (request, response) => {
 });
 
 // function to find the city that matches the query parameters
+// don't use this.props for arrays b/c its a react.js front end method
 function findCity(lat, lon, searchQuery) {
     const cities = [
         {
-            lat: this.props.lat[0],
-            lon: this.props.lon[0],
-            searchQuery: this.props.city_name[0],
+            lat: data[0].lat,
+            lon: data[0].lon,
+            searchQuery: data[0].city_name,
         },
         {
-            lat: this.props.lat[1],
-            lon: this.props.lon[1],
-            searchQuery: this.props.city_name[1],
+            lat: data[1].lat,
+            lon: data[1].lon,
+            searchQuery: data[1].city_name,
         },
         {
-            lat: this.props.lat[2],
-            lon: this.props.lon[2],
-            searchQuery: this.props.city_name[2],
+            lat: data[2].lat,
+            lon: data[2].lon,
+            searchQuery: data[2].city_name,
         },
     ];
     const city = cities.find(
-        (city) =>
-            city.lat === lat && city.lon === lon && city.searchQuery.toLowerCase() === searchQuery.toLowerCase()
-    );
+        (city) => {
+            return city.lat === lat && city.lon === lon && city.searchQuery.toLowerCase() === searchQuery.toLowerCase()
+        });
     return city;
 }
 
@@ -89,13 +93,13 @@ function findWeather(searchQuery) {
 
 // configure 404 error
 app.get('*', (request, response) => {
-    response.status(404).send('City Explorer Page not found.');
+    response.status(404).send('City not found.');
 });
 
 // this handles the middleware for the app
 app.use((error, request, response, next) => {
     console.error(error);
-    response.status(500).send('City Explorer not working!');
+    response.status(500).send('City Explorer is not working!');
 });
 
 // this starts the server
