@@ -38,7 +38,7 @@ app.get('/weather', (request, response) => {
     const weather = findWeather(city.searchQuery);
 
     // if weather is not found, return an error
-    if (!weather) {
+    if (weather) {
         response.status(404).send('Weather not found');
         return;
     }
