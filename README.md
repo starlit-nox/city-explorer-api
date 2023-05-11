@@ -33,15 +33,27 @@
 
 05-10-2023 10:00am Server now listens & 404 Not Found Error in terminal
 
-5-10-2023 Custom 404 Error added.
+05-10-2023 12pm Custom 404 Error added.
 
-5-10-2023
+05-10-2023 1pm Custom 500 Error added.
 
-5-10-2023
+05-10-2023 8:30pm Adjusted array to fix server.
 
-5-10-2023
+05-10-2023 10:30pm Server.js runs!
 
-5-10-2023
+05-10-2023 11:47pm API endpoint began.
+
+05-11-2023
+
+05-11-2023
+
+05-11-2023
+
+05-11-2023
+
+05-11-2023
+
+05-11-2023
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
