@@ -38,10 +38,10 @@ console.log(city_name)
     }
 
     // find the weather for the city
-    const weather = findWeather(city.city_name);
+    const weather = findWeather(city.searchQuery);
 
     // if weather is not found, return an error
-    if (weather) {
+    if (!weather) {
         response.status(404).send('Weather not found');
         return;
     }
@@ -52,7 +52,7 @@ console.log(city_name)
     // send the weather data as response
     response.send({
         city: city.city_name,
-        description: weather.weather.description,
+        description: weather.description,
         temperature: weather.temp,
         forecasts: forecasts // add the forecasts array to the response
     });
@@ -80,14 +80,14 @@ function findCity(lat, lon, searchQuery) {
     ];
     const city = cities.find(
         (city) => {
-            return city.lat === lat && city.lon === lon && city.searchQuery.toLowerCase() === searchQuery.toLowerCase()
+            return city.lat == lat && city.lon == lon && city.searchQuery.toLowerCase() == searchQuery.toLowerCase()
         });
     return city;
 }
 
 // function to find the weather for a given city
 function findWeather(searchQuery) {
-    const weather = data.find((w) => w.city_name.toLowerCase() === searchQuery.toLowerCase());
+    const weather = data.find((w) => w.city_name.toLowerCase() == searchQuery.toLowerCase());
     return weather;
 }
 
