@@ -48,30 +48,14 @@ router.get('/weather', (request, response) => {
     // find the weather for the city
     const weather = findWeather(city.searchQuery);
 
-    // sending the findweather response to 3000 (front end)
-    response.send(findWeather)
-
-    // this is fetching the weather
-    fetch('/weather')
-    .then(response => weather.json())
-    .then(weather => {})
-
-    // if weather is not found, return an error
+        // if weather is not found, return an error
     if (!weather) {
-        response.status(404).send('Weather not found');
+        response.status(404),send('Weather not found');
         return;
     }
 
-    // create an array of Forecast objects for each day of the week
-    const forecasts = weather.data.map(day => new Forecast(day.datetime, day.weather.description));
-
-    // send the weather data as response
-    response.send({
-        city: city.city_name,
-        description: weather.description,
-        temperature: weather.temp,
-        forecasts: forecasts // add the forecasts array to the response
-    });
+    // sending the weather response to 3000 (front end)
+    response.send(weather)
 });
 
 // function to find the city that matches the query parameters
@@ -143,7 +127,7 @@ app.use((error, request, response, next) => {
 });
 
 // this starts the server (router)
-app.listen(3001, () => console.log('listening on 3001'));
+app.listen(3003, () => console.log('listening on 3003'));
 
 
 module.exports = app;
