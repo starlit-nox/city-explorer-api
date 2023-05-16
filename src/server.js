@@ -3,8 +3,9 @@
 require('dotenv').config(); // enables process.env
 const express = require('express');
 const cors = require('cors');
-const data = require('./data/weather.json'); // read in the list
-
+const data = require('../src/weather.json'); // read in the list
+const fs = require('fs'); // this lets us read and write the code
+const serverless = require("serverless-http"); //this lets us use a serverless website (http)
 class Forecast { // create a class for Forecast with date and description properties
     constructor(date, description) {
         this.date = date;
@@ -13,14 +14,21 @@ class Forecast { // create a class for Forecast with date and description proper
 }
 
 const app = express(); // initializes app
+const router = express.Router();
+
 app.use(cors()); // allows cross-origin resource sharing
+app.use(express.json());
+
+router.get(`/`, (request,response) => {
+response.send("whatever i feel like typing")
+});
 
 // this receives all requests and tells it what to do
-app.get('/weather', (request, response) => {
+router.get('/weather', (request, response) => {
     const { lat, lon, city_name } = request.query;
-console.log(lat)
-console.log(lon)
-console.log(city_name)
+// console.log(lat)
+// console.log(lon)
+// console.log(city_name)
 
     // check if required parameters are missing
     if (!lat || !lon || !city_name) {
@@ -39,6 +47,14 @@ console.log(city_name)
 
     // find the weather for the city
     const weather = findWeather(city.searchQuery);
+
+    // sending the findweather response to 3000 (front end)
+    response.send(findWeather)
+
+    // this is fetching the weather
+    fetch('/weather')
+    .then(response => weather.json())
+    .then(weather => {})
 
     // if weather is not found, return an error
     if (!weather) {
@@ -90,17 +106,45 @@ function findWeather(searchQuery) {
     const weather = data.find((w) => w.city_name.toLowerCase() == searchQuery.toLowerCase());
     return weather;
 }
+// http://localhost:3001/weather?city_name=something
+router.post('/weather', (request, response) => {
+    let locateWeather = {
+        "city_name": request.body.city_name,
+        "valid_date": request.body.valid_date,
+        "max_temp:": request.body.max.temp,
+        "min_temp": request.body.min.temp,
+        "temp": request.body.temp,
+        "description": request.body.description
+    }
+    let updateWeatherData = data;
+    updateWeatherData.push(locateWeather);
 
-// configure 404 error
-app.get('*', (request, response) => {
-    response.status(404).send('City not found.');
+// this is writing in the file
+// its passing through the params
+fs.writeFile("test", JSON.stringify(updateWeatherData), function (err) {
+    if (err) {
+        return console.log(err);
+    }
+    console.log("This fs test was saved!")
+});
+response.send('Success');
 });
 
-// this handles the middleware for the app
+
+// configure 404 error (router)
+router.get('*', (request, response) => {
+    response.status(404).send('City not found.');
+});
+app.use(`/.netlify/functions/server`,router);
+// this handles the middleware for the app (rounter)
 app.use((error, request, response, next) => {
     console.error(error);
     response.status(500).send('City Explorer is not working!');
 });
 
-// this starts the server
+// this starts the server (router)
 app.listen(3001, () => console.log('listening on 3001'));
+
+
+module.exports = app;
+module.exports.handler = serverless(app);
