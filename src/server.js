@@ -19,12 +19,12 @@ const router = express.Router();
 app.use(cors()); // allows cross-origin resource sharing
 app.use(express.json());
 
-router.get(`/`, (request,response) => {
+app.get(`/`, (request,response) => {
 response.send("whatever i feel like typing")
 });
 
 // this receives all requests and tells it what to do
-router.get('/weather', (request, response) => {
+app.get('/weather', (request, response) => {
     const { lat, lon, city_name } = request.query;
 // console.log(lat)
 // console.log(lon)
@@ -91,7 +91,7 @@ function findWeather(searchQuery) {
     return weather;
 }
 // http://localhost:3001/weather?city_name=something
-router.post('/weather', (request, response) => {
+app.post('/weather', (request, response) => {
     let locateWeather = {
         "city_name": request.body.city_name,
         "valid_date": request.body.valid_date,
@@ -116,7 +116,7 @@ response.send('Success');
 
 
 // configure 404 error (router)
-router.get('*', (request, response) => {
+app.get('*', (request, response) => {
     response.status(404).send('City not found.');
 });
 app.use(`/.netlify/functions/server`,router);
