@@ -13,6 +13,8 @@ class Forecast { // create a class for Forecast with date and description proper
     }
 }
 
+
+
 const app = express(); // initializes app
 
 app.use(cors()); // allows cross-origin resource sharing
@@ -49,9 +51,16 @@ app.get('/weather', (request, response) => {
         response.status(404).send('Weather not found');
         return;
     }
+    let weatherForecast = weather.data.map((data) => {
+        return new Forecast(data.valid_date, data.description);
+    })
+    //new Forecast (weather.data[0].valid_date, weather.data[0].description)
+    
+    // use the map method here
+    
 
     // sending the weather response to 3000 (front end)
-    response.send(weather);
+    response.send(weatherForecast);
 });
 
 // function to find the city that matches the query parameters
