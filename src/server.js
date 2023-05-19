@@ -5,7 +5,6 @@ const express = require('express');
 const cors = require('cors');
 const data = require('../src/weather.json'); // read in the list
 const fs = require('fs'); // this lets us read and write the code
-const serverless = require("serverless-http"); //this lets us use a serverless website (http)
 
 class Forecast { // create a class for Forecast with date and description properties
     constructor(date, description) {
@@ -15,7 +14,6 @@ class Forecast { // create a class for Forecast with date and description proper
 }
 
 const app = express(); // initializes app
-const router = express.Router();
 
 app.use(cors()); // allows cross-origin resource sharing
 app.use(express.json());
@@ -118,7 +116,7 @@ app.post('/weather', (request, response) => {
 app.get('*', (request, response) => {
     response.status(404).send('City not found.');
 });
-app.use(`/.netlify/functions/server`, router);
+
 // this handles the middleware for the app (router)
 app.use((error, request, response, next) => {
     console.error(error);
@@ -128,5 +126,3 @@ app.use((error, request, response, next) => {
 // this starts the server (router)
 app.listen(3003, () => console.log('listening on 3003'));
 
-module.exports = app;
-module.exports.handler = serverless(app);
