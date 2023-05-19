@@ -52,7 +52,7 @@ app.get('/weather', (request, response) => {
         return;
     }
     let weatherForecast = weather.data.map((data) => {
-        return new Forecast(data.valid_date, weather.data.description);
+        return new Forecast(data.valid_date, data.weather.description);
     })
     //new Forecast (weather.data[0].valid_date, weather.data[0].description)
     
