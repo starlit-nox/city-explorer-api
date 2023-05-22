@@ -92,16 +92,16 @@ app.post('/weather', (request, response) => {
 });
 
 app.get('/movies', async (request, response) => {
-    const { city_name } = request.query;
+    const { query } = request.query;
 
-    if (!city_name) {
-        response.status(400).send('City name is missing');
+    if (!query) {
+        response.status(400).send('Query is missing');
         return;
     }
 
     try {
         const movieData = await axios.get(
-            `https://api.themoviedb.org/3/search/movie?query=${city_name}&api_key=${process.env.MOVIE_API_KEY}`
+            `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${process.env.MOVIE_API_KEY}`
         );
 
         const localMovies = movieData.data.results.map((movie) => {
@@ -116,6 +116,7 @@ app.get('/movies', async (request, response) => {
         response.status(500).send('Error retrieving movie data');
     }
 });
+
 
 app.get('*', (request, response) => {
     response.status(404).send('City not found.');
