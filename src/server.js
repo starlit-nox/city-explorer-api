@@ -1,63 +1,77 @@
 'use strict';
 
-require('dotenv').config();
+require('dotenv').config(); // enables process.env
 const express = require('express');
 const cors = require('cors');
-const axios = require('axios');
-const data = require('../src/weather.json');
-const fs = require('fs');
+const data = require('../src/weather.json'); // read in the list
+const fs = require('fs'); // this lets us read and write the code
+const { error } = require('console');
 
-class Forecast {
+
+class Forecast { // create a class for Forecast with date and description properties
     constructor(date, description) {
         this.date = date;
         this.description = description;
     }
 }
 
-const app = express();
+const app = express(); // initializes app
 
-app.use(cors());
+app.use(cors()); // allows cross-origin resource sharing
 app.use(express.json());
 
-app.get('/', (request, response) => {
-    response.send('Page Not Found');
+app.get(`/`, (request, response) => {
+    response.send("Page Not Found");
 });
 
+// this receives all requests and tells it what to do
 app.get('/weather', (request, response) => {
     const { lat, lon, city_name } = request.query;
 
+    // check if required parameters are missing
     if (!lat || !lon || !city_name) {
         response.status(400).send('Required query parameters are missing');
         return;
     }
 
+    // find the city that matches the query parameters
     const city = findCity(lat, lon, city_name);
 
+    // if city is not found, return an error
     if (!city) {
         response.status(404).send('City not found');
         return;
     }
 
     const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
-    const WEATHER_API_URL = `https://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API_KEY}&lat=${lat}&lon=${lon}`;
+    const WEATHER_API_URL = `https://api.weatherbit.io/v2.0/forecast.json?key=${WEATHER_API_KEY}&q=${lat},${lon}`;  
 
-    axios
-        .get(WEATHER_API_URL)
-        .then((apiResponse) => {
-            const weatherData = apiResponse.data;
+    axios //this is importing axios
+    .get (WEATHER_API_URL) //this gets the weather api url (which has the API key in it)
+    .then((apiResonse) => {
+        const weatherData = apiResonse.data; //this is getting the data from the website's weather data forecast
 
-            let weatherForecast = weatherData.data.map((data) => {
-                return new Forecast(data.datetime, data.weather.description);
-            });
-
-            response.send(weatherForecast);
-        })
-        .catch((error) => {
-            console.error('Error with weather data:', error);
-            response.status(500).send('Error fetching weather data');
-        });
+    let weatherForecast = weatherData.data.map((data) => {
+        return new Forecast(data.valid_date, data.weather.description);
+    });
+        // sending the weather response to 3000 (front end)
+    response.send(weatherForecast); 
+    })
 });
 
+    // find the weather for the city
+    const weather = findWeather(city.searchQuery);
+
+    // if weather is not found, return an error
+    if (!weather) {
+        response.status(404).send('Weather not found');
+        return;
+    }
+
+    // sending the weather response to 3000 (front end)
+
+// function to find the city that matches the query parameters
+// don't use this.props for arrays b/c its a react.js front end method
 function findCity(lat, lon, searchQuery) {
     const cities = [
         {
@@ -76,13 +90,10 @@ function findCity(lat, lon, searchQuery) {
             searchQuery: data[2].city_name,
         },
     ];
-    const city = cities.find((city) => {
-        return (
-            city.lat == lat &&
-            city.lon == lon &&
-            city.searchQuery.toLowerCase() == searchQuery.toLowerCase()
-        );
-    });
+    const city = cities.find(
+        (city) => {
+            return city.lat == lat && city.lon == lon && city.searchQuery.toLowerCase() == searchQuery.toLowerCase();
+        });
     return city;
 }
 
@@ -130,3 +141,4 @@ app.use((error, request, response, next) => {
 
 // this starts the server (router)
 app.listen(3003, () => console.log('listening on 3003'));
+
