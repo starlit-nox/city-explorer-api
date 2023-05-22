@@ -23,6 +23,14 @@ class Forecast {
     }
 }
 
+class Movie {
+    constructor(title, overview, releaseDate) {
+        this.title = title;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+    }
+}
+
 app.get('/', (request, response) => {
     response.send('Page Not Found');
 });
@@ -48,7 +56,8 @@ app.get('/weather', async (request, response) => {
 
         response.send(dailyForecasts);
     } catch (error) {
-        response.status(500).send(error.message);
+        console.error('Error retrieving weather data:', error);
+        response.status(500).send('Error retrieving weather data');
     }
 });
 
@@ -73,7 +82,7 @@ app.post('/weather', (request, response) => {
 
     fs.writeFile('test.json', JSON.stringify(updateWeatherData), (err) => {
         if (err) {
-            console.log(err);
+            console.error('Error saving weather data:', err);
             response.status(500).send('Error saving weather data');
         } else {
             console.log('Weather data saved successfully');
@@ -81,14 +90,6 @@ app.post('/weather', (request, response) => {
         }
     });
 });
-
-class Movie {
-    constructor(title, overview, releaseDate) {
-        this.title = title;
-        this.overview = overview;
-        this.releaseDate = releaseDate;
-    }
-}
 
 app.get('/movies', async (request, response) => {
     const { city_name } = request.query;
@@ -111,7 +112,8 @@ app.get('/movies', async (request, response) => {
 
         response.send(localMovies);
     } catch (error) {
-        response.status(500).send(error.message);
+        console.error('Error retrieving movie data:', error);
+        response.status(500).send('Error retrieving movie data');
     }
 });
 
