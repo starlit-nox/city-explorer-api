@@ -43,7 +43,6 @@
 
 05-10-2023 11:47pm API endpoint began.
 
-05-21-2023 11:00 pm Created Weather API Varible 
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
@@ -56,36 +55,6 @@ For each of the lab features, make an estimate of the time it will take you to c
 
 **Estimate of time needed to complete:** 12 Hours
 
-**Start time:** 10 AM Thrusday
+**Start time:** 10 AM Thrusday 05/04
 
-**Finish time:** 1 PM Friday
-
-**Actual time needed to complete:** 2 Weeks
-
----
-
-**Time Estimates Lab 08**
-For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
-
-**Name of feature:** Live Weather Info | City Explorer
-
-**Estimate of time needed to complete:** 12 Hours
-
-**Start time:** 11 PM Sunday
-
-**Finish time:** _______
-
-**Actual time needed to complete:** _____
-
-**Time Estimates Lab 08**
-For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
-
-**Name of feature:** Top 20 Movies | City Explorer
-
-**Estimate of time needed to complete:** 12 Hours
-
-**Start time:** 11 PM Sunday
-
-**Finish time:** _______
-
-**Actual time needed to complete:** _____
+**Actual time needed to complete:** 2 Weeks and 1 Day
