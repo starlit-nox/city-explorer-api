@@ -52,6 +52,8 @@ app.get('/weather', async (request, response) => {
             return new Forecast(day.datetime, day.weather.description);
         });
 
+        console.log('Weather:', dailyForecasts); // Log weather as an array
+
         response.send(dailyForecasts);
     } catch (error) {
         response.status(500).send(error.message);
@@ -74,6 +76,8 @@ app.get('/movies', async (request, response) => {
         const localMovies = movieData.data.results.map((movie) => {
             return new Movie(movie.title, movie.overview, movie.release_date);
         });
+
+        console.log('Movies:', localMovies); // Log movies as an array
 
         response.send(localMovies);
     } catch (error) {
