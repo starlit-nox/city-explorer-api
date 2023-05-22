@@ -76,3 +76,16 @@ For each of the lab features, make an estimate of the time it will take you to c
 **Finish time:** _______
 
 **Actual time needed to complete:** _____
+
+**Time Estimates Lab 08**
+For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
+
+**Name of feature:** Top 20 Movies | City Explorer
+
+**Estimate of time needed to complete:** 12 Hours
+
+**Start time:** 11 PM Sunday
+
+**Finish time:** _______
+
+**Actual time needed to complete:** _____
