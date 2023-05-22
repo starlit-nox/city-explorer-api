@@ -23,14 +23,6 @@ class Forecast {
     }
 }
 
-class Movie {
-    constructor(title, overview, releaseDate) {
-        this.title = title;
-        this.overview = overview;
-        this.releaseDate = releaseDate;
-    }
-}
-
 app.get('/', (request, response) => {
     response.send('Page Not Found');
 });
@@ -55,31 +47,6 @@ app.get('/weather', async (request, response) => {
         console.log('Weather:', dailyForecasts); // Log weather as an array
 
         response.send(dailyForecasts);
-    } catch (error) {
-        response.status(500).send(error.message);
-    }
-});
-
-app.get('/movies', async (request, response) => {
-    const { city_name } = request.query;
-
-    if (!city_name) {
-        response.status(400).send('City name is missing');
-        return;
-    }
-
-    try {
-        const movieData = await axios.get(
-            `https://api.themoviedb.org/3/search/movie?query=${city_name}&api_key=${process.env.MOVIE_API_KEY}`
-        );
-
-        const localMovies = movieData.data.results.map((movie) => {
-            return new Movie(movie.title, movie.overview, movie.release_date);
-        });
-
-        console.log('Movies:', localMovies); // Log movies as an array
-
-        response.send(localMovies);
     } catch (error) {
         response.status(500).send(error.message);
     }
@@ -113,6 +80,39 @@ app.post('/weather', (request, response) => {
             response.send('Success');
         }
     });
+});
+
+class Movie {
+    constructor(title, overview, releaseDate) {
+        this.title = title;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+    }
+}
+
+app.get('/movies', async (request, response) => {
+    const { city_name } = request.query;
+
+    if (!city_name) {
+        response.status(400).send('City name is missing');
+        return;
+    }
+
+    try {
+        const movieData = await axios.get(
+            `https://api.themoviedb.org/3/search/movie?query=${city_name}&api_key=${process.env.MOVIE_API_KEY}`
+        );
+
+        const localMovies = movieData.data.results.map((movie) => {
+            return new Movie(movie.title, movie.overview, movie.release_date);
+        });
+
+        console.log('Movies:', localMovies); // Log movies as an array
+
+        response.send(localMovies);
+    } catch (error) {
+        response.status(500).send(error.message);
+    }
 });
 
 app.get('*', (request, response) => {
