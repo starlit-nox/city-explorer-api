@@ -43,21 +43,12 @@
 
 05-10-2023 11:47pm API endpoint began.
 
-05-11-2023 Debugging
-
-05-12-2023 Debugging
-
-05-13-2023 Debugging
-
-05-19-2023 Added Variable to connect to static site.
-
-05-19-2023 Website running.
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 Resource Credit: <https://www.javascripttutorial.net/nodejs-tutorial/simple-express-server/>
 
-**Time Estimates**
+**Time Estimates Lab 07**
 For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
 
 **Name of feature:** Weather Info | City Explorer
@@ -65,7 +56,5 @@ For each of the lab features, make an estimate of the time it will take you to c
 **Estimate of time needed to complete:** 12 Hours
 
 **Start time:** 10 AM Thrusday 05/04
-
-**Finish time:** 1PM Friday 05/19
 
 **Actual time needed to complete:** 2 Weeks and 1 Day
