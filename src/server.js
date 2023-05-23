@@ -3,8 +3,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const axios = require('axios');
-const fs = require('fs');
+const weather = require('./Weather');
+const movies = require('./Movies');
 
 const app = express();
 app.use(express.static(__dirname));
@@ -15,21 +15,6 @@ app.use(
         origin: 'https://city-explorer-ncc5.onrender.com',
     })
 );
-
-class Forecast {
-    constructor(date, description) {
-        this.date = date;
-        this.description = description;
-    }
-}
-
-class Movie {
-    constructor(title, overview, releaseDate) {
-        this.title = title;
-        this.overview = overview;
-        this.releaseDate = releaseDate;
-    }
-}
 
 app.get('/', (request, response) => {
     response.send('Page Not Found');
@@ -44,15 +29,7 @@ app.get('/weather', async (request, response) => {
     }
 
     try {
-        const weatherData = await axios.get(
-            `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${process.env.WEATHER_API_KEY}`
-        );
-
-        const dailyForecasts = weatherData.data.data.map((day) => {
-            return new Forecast(day.datetime, day.weather.description);
-        });
-
-        console.log('Weather:', dailyForecasts); // Log weather as an array
+        const dailyForecasts = await weather.getWeather(lat, lon);
 
         response.send(dailyForecasts);
     } catch (error) {
@@ -78,17 +55,12 @@ app.post('/weather', (request, response) => {
         description: description,
     };
 
+    // Assuming you have the "data" array defined somewhere
     const updateWeatherData = [...data, locateWeather];
 
-    fs.writeFile('test.json', JSON.stringify(updateWeatherData), (err) => {
-        if (err) {
-            console.error('Error saving weather data:', err);
-            response.status(500).send('Error saving weather data');
-        } else {
-            console.log('Weather data saved successfully');
-            response.send('Success');
-        }
-    });
+    weather.saveWeatherData(updateWeatherData);
+
+    response.send('Success');
 });
 
 app.get('/movies', async (request, response) => {
@@ -100,15 +72,7 @@ app.get('/movies', async (request, response) => {
     }
 
     try {
-        const movieData = await axios.get(
-            `https://api.themoviedb.org/3/search/movie?query=${searchquery}&api_key=${process.env.MOVIE_API_KEY}`
-        );
-
-        const localMovies = movieData.data.results.map((movie) => {
-            return new Movie(movie.title, movie.overview, movie.release_date);
-        });
-
-        console.log('Movies:', localMovies); // Log movies as an array
+        const localMovies = await movies.searchMovies(searchquery);
 
         response.send(localMovies);
     } catch (error) {
