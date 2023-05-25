@@ -3,7 +3,7 @@ const axios = require('axios'); // this imports the axios library
 const fs = require('fs'); // this lets the app read and write code
 const cache = require('./cache.js'); // this imports the cache  to retrieve & cache(save) weather data
 
-// constructor class
+// constructor class for weather API
 class Forecast {
     constructor(date, description) {
         this.date = date; //parameter
@@ -30,8 +30,8 @@ async function getWeather(lat, lon) {
             const weatherData = await axios.get(
                 `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${process.env.WEATHER_API_KEY}`
             );
-                // another variable for the weather API to get daily forecasts
-                // map creates an array using datetime and description
+            // another variable for the weather API to get daily forecasts
+            // map creates an array using datetime and description
             const dailyForecasts = weatherData.data.data.map((day) => {
                 return new Forecast(day.datetime, day.weather.description);
             });
