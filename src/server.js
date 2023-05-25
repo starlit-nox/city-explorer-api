@@ -1,13 +1,13 @@
 'use strict';
 
-require('dotenv').config();
+require('dotenv').config(); // enables process.env
 const express = require('express');
 const cors = require('cors');
 const weather = require('./Weather');
 const movies = require('./Movies');
 
-const app = express();
-app.use(express.static(__dirname));
+const app = express(); // initializes app
+app.use(express.static(__dirname)); // note here
 app.use(express.json());
 
 app.use(
@@ -20,11 +20,13 @@ app.get('/', (request, response) => {
     response.send('Page Not Found');
 });
 
+// this recieves all weather requests and tells the code what to do with it
 app.get('/weather', async (request, response) => {
+    // its searching for the lat, lon, and city-name and requesting those params
     const { lat, lon, city_name } = request.query;
-
+    // this is the 400 error letting the user know the params weren't added are missing
     if (!lat || !lon || !city_name) {
-        response.status(400).send('Required query parameters are missing');
+        response.status(400).send('City not found. Parameters are missing.');
         return;
     }
 
@@ -63,6 +65,7 @@ app.post('/weather', (request, response) => {
     response.send('Success');
 });
 
+// this recieves all requests from the movie API and tells the code what to do with it
 app.get('/movies', async (request, response) => {
     const { searchquery } = request.query;
 
